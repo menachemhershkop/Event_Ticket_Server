@@ -24,5 +24,7 @@ Sample codes:
 
 &nbsp;curl -X POST -H "Content-Type: application/json" -d '{"username":"avi", "password":12345}' http://localhost:3000/user/register
 
+render:
+https://event-ticket-server-fqca.onrender.com
 
 
