@@ -1,12 +1,1 @@
-[
-    {
-        "username":"dani",
-        "eventName":"sihur",
-        "ticketsBought":3
-    },
-    {
-        "username":"yossi",
-        "eventName":"farbrengen",
-        "ticketsBought":10
-    }
-]
+[{"username":"dani","eventName":"sihur","ticketsBought":3},{"username":"yossi","eventName":"farbrengen","ticketsBought":10},{"username":"yossi","eventName":"farbrengen","ticketsBought":10},{"username":"ali","eventName":"mitup","ticketsBought":3},{"username":"ali","eventName":"mitup","ticketsBought":3},{"username":"dani","eventName":"mitup","ticketsBought":1}]

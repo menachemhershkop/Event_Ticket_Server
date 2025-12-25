@@ -1,13 +1,14 @@
 import { log } from 'console'
 import express from 'express'
 import {promises as fs} from 'fs'
+import verification from '../auth.js'
 export const ticketsRout= express()
 ticketsRout.use(express.json())
 
 const eventFile='data/events.json'
 const receiptFile = 'data/receipts.json'
 
-ticketsRout.post('/tickets/buy', async (req, res)=>{
+ticketsRout.post('/tickets/buy', verification,async (req, res)=>{
     const body = req.body
     const event = JSON.parse(await fs.readFile(eventFile, "utf8"))
     const receipts = JSON.parse(await fs.readFile(receiptFile, "utf8"))
@@ -23,19 +24,18 @@ ticketsRout.post('/tickets/buy', async (req, res)=>{
                     res.send({"message": "Tickets purchased successfully"})
                 }
                 else{
-                    res.status(400).send("Not enough tickets")
+                    res.status(400).send("Not enough tickets");
                 }
 
-                flag =true    
+                flag =true;
             }
         })
     }
-    // console.log(event);
     else{
-        res.status(400).send("Bad Request")
+        res.status(400).send("Bad Request");
     }
     if (!flag){
-        res.status(400).send("Invalid event name. Try again.")
+        res.status(400).send("Invalid event name. Try again.");
     }
 }
     catch(error){
@@ -43,4 +43,25 @@ ticketsRout.post('/tickets/buy', async (req, res)=>{
         
     }
 
+})
+
+ticketsRout.get('/:username/summary', async (req, res)=>{
+    const param = req.params;
+    const receipts = JSON.parse(await fs.readFile(receiptFile, "utf8"))
+    let total =0
+    let count =0
+    let event = [] 
+    receipts.forEach(recipt => {
+        if (recipt.username== param.username){
+            event.push(recipt.eventName)
+            total += recipt.ticketsBought
+            count ++
+        }
+    })
+    res.send({
+  "totalTicketsBought": total,
+  "events": event,
+  "averageTicketsPerEvent": total/count
+}
+)
 })

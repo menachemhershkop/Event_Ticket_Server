@@ -11,6 +11,7 @@ app.listen(port, () => {
 console.log(`server listening on port ${port}`)
 })
 
+
 app.use('/user', userRout);
 app.use('/creator/event', eventRout)
 app.use('/users', ticketsRout)
