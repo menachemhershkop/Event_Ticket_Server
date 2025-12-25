@@ -9,7 +9,7 @@ userRout.post('/register',async (req, res) =>{
     const body = req.body
     let flag = true
     try{
-        if('username' in body && 'password' in body){
+        if('username' in body && 'password' in body && typeof body.username == 'string' && typeof body.password == 'string' ){
     data.forEach(element => {
         if (body.username == element.username){
             flag = false
@@ -19,9 +19,12 @@ userRout.post('/register',async (req, res) =>{
     if (flag){
     data.push(body);
     fs.writeFile(userFile, JSON.stringify(data));
-    res.status(201).send("User created seccufly")
+    res.status(201).send({
+  "message": "User registered successfully" 
+}
+)
     }
-    console.log(data);
+    
 }
 else{
     res.status(400).send("Missing fields")
@@ -30,8 +33,4 @@ else{
 catch{
     res.status(400).send("Bad Request")
 }
-
-
-
-
 })
